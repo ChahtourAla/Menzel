@@ -38,48 +38,60 @@ export type DemoUser = {
   partyId: string;
 };
 
+export const localDamlParties = {
+  easycoin: 'Easycoin::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  owner: 'Owner::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  investor1: 'Investor1::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  investor2: 'Investor2::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  investor3: 'Investor3::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  investor4: 'Investor4::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  auditor: 'Auditor::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  paymentVerifier: 'PaymentVerifier::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+  legalAdmin: 'LegalAdmin::1220bd24b37d4ca2ece6c6637262beb16394bcbe85b6e04c7a79f0a02524b1a5f3a6',
+} as const;
+
 export const demoUsers: Record<AppRole, DemoUser> = {
   OWNER: {
     role: 'OWNER',
     name: 'Owner Demo',
     email: 'owner@test.com',
     initials: 'OW',
-    partyId: 'Party::OWNER',
+    partyId: localDamlParties.owner,
   },
   EASYCOIN: {
     role: 'EASYCOIN',
     name: 'Easycoin Admin',
     email: 'easycoin@test.com',
     initials: 'EA',
-    partyId: 'Party::EASYCOIN',
+    partyId: localDamlParties.easycoin,
   },
   INVESTOR: {
     role: 'INVESTOR',
     name: 'Investor Demo',
     email: 'investor1@test.com',
     initials: 'IN',
-    partyId: 'Party::INVESTOR',
+    partyId: localDamlParties.investor1,
   },
   AUDITOR: {
     role: 'AUDITOR',
     name: 'Auditor Demo',
     email: 'auditor@test.com',
     initials: 'AU',
-    partyId: 'Party::AUDITOR',
+    partyId: localDamlParties.auditor,
   },
   PAYMENT_VERIFIER: {
     role: 'PAYMENT_VERIFIER',
     name: 'Payment Verifier',
     email: 'paymentverifier@test.com',
     initials: 'PV',
-    partyId: 'Party::PAYMENT_VERIFIER',
+    partyId: localDamlParties.paymentVerifier,
   },
   LEGAL_ADMIN: {
     role: 'LEGAL_ADMIN',
     name: 'Legal Admin',
     email: 'legaladmin@test.com',
     initials: 'LA',
-    partyId: 'Party::LEGAL_ADMIN',
+    partyId: localDamlParties.legalAdmin,
   },
   ADMIN: {
     role: 'ADMIN',
@@ -224,25 +236,25 @@ export const roleProfiles: Record<AppRole, RoleProfile> = {
   },
   PAYMENT_VERIFIER: {
     title: 'Payment verifier workspace',
-    tagline: 'Confirm funding and reward payments.',
+    tagline: 'Confirm investor upfront funding.',
     summary:
-      'The payment verifier confirms upfront funding, then confirms reward transfers after reconciliation.',
+      'The payment verifier confirms that investor upfront payment was received before holdings are issued.',
     badge: 'Payment view',
-    primaryAction: { label: 'Confirm funding', href: '/dashboard/transactions' },
-    secondaryAction: { label: 'Review settlement', href: '/dashboard/reports' },
+    primaryAction: { label: 'Confirm funding', href: '/dashboard/investments' },
+    secondaryAction: { label: 'Review confirmations', href: '/dashboard/transactions' },
     sections: [
       {
         title: 'Funding confirmation',
         description: 'Match subscription payment references with bank confirmation.',
-        actionLabel: 'Open audit trail',
-        href: '/dashboard/transactions',
+        actionLabel: 'Open funding queue',
+        href: '/dashboard/investments',
         icon: Wallet,
       },
       {
-        title: 'Reward payment',
-        description: 'Confirm reward transfers once reward records exist.',
-        actionLabel: 'Open settlement',
-        href: '/dashboard/reports',
+        title: 'Funding confirmations',
+        description: 'Review created funding confirmations after payment approval.',
+        actionLabel: 'Open trail',
+        href: '/dashboard/transactions',
         icon: FileText,
       },
     ],

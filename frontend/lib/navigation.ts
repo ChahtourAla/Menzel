@@ -7,6 +7,8 @@ import {
   Activity,
   User,
   Settings,
+  Users,
+  Building2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -37,6 +39,13 @@ export const mainNav: NavGroup[] = [
         roles: ['OWNER', 'EASYCOIN', 'INVESTOR', 'AUDITOR', 'PAYMENT_VERIFIER', 'LEGAL_ADMIN', 'ADMIN'],
       },
       {
+        title: 'My Properties',
+        href: '/dashboard/my-properties',
+        icon: Building2,
+        description: 'Create and manage your property profiles',
+        roles: ['OWNER'],
+      },
+      {
         title: 'Managed Contract',
         href: '/dashboard/properties',
         icon: Landmark,
@@ -49,6 +58,20 @@ export const mainNav: NavGroup[] = [
         icon: Coins,
         description: 'Investors, funding, holdings, and expected rewards',
         roles: ['OWNER', 'EASYCOIN', 'INVESTOR', 'ADMIN'],
+      },
+      {
+        title: 'Holdings',
+        href: '/dashboard/holdings',
+        icon: Coins,
+        description: 'Active holdings before rewards and redemption',
+        roles: ['OWNER', 'INVESTOR', 'EASYCOIN', 'AUDITOR', 'LEGAL_ADMIN', 'PAYMENT_VERIFIER'],
+      },
+      {
+        title: 'Funding Confirmation',
+        href: '/dashboard/investments',
+        icon: Coins,
+        description: 'Confirm investor upfront payment receipts',
+        roles: ['PAYMENT_VERIFIER'],
       },
       {
         title: 'Performance & Settlement',
@@ -65,11 +88,25 @@ export const mainNav: NavGroup[] = [
         roles: ['EASYCOIN', 'AUDITOR', 'PAYMENT_VERIFIER', 'LEGAL_ADMIN', 'ADMIN'],
       },
       {
+        title: 'Demo Summary',
+        href: '/dashboard/demo-summary',
+        icon: FileText,
+        description: 'Final workflow state across validation, settlement, and redemption',
+        roles: ['OWNER', 'EASYCOIN', 'INVESTOR', 'AUDITOR', 'PAYMENT_VERIFIER', 'LEGAL_ADMIN', 'ADMIN'],
+      },
+      {
         title: 'Workflow Status',
         href: '/dashboard/settings',
         icon: Activity,
         description: 'System checks and demo preferences',
         roles: ['ADMIN', 'EASYCOIN'],
+      },
+      {
+        title: 'User management',
+        href: '/dashboard/users',
+        icon: Users,
+        description: 'Review platform users and access status',
+        roles: ['ADMIN'],
       },
     ],
   },
