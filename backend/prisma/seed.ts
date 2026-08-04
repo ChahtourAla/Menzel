@@ -1,15 +1,19 @@
 import 'dotenv/config';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaPg } from '@prisma/adapter-pg';
 import * as bcrypt from 'bcryptjs';
+import { Pool } from 'pg';
 
 import { PrismaClient } from '../src/generated/prisma/client';
 
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL || 'file:./prisma/dev.db';
+  const databaseUrl = process.env.DATABASE_URL;
 
-  const adapter = new PrismaBetterSqlite3({
-    url: databaseUrl,
-  });
+  if (!databaseUrl) {
+    throw new Error('DATABASE_URL must be configured.');
+  }
+
+  const pool = new Pool({ connectionString: databaseUrl });
+  const adapter = new PrismaPg(pool);
 
   const prisma = new PrismaClient({
     adapter,
@@ -35,6 +39,7 @@ async function main() {
     });
     console.log('Admin user verified and activated.');
     await prisma.$disconnect();
+    await pool.end();
     return;
   }
 
@@ -52,6 +57,7 @@ async function main() {
   console.log('Seed admin created: admin@test.com / Password123!');
 
   await prisma.$disconnect();
+  await pool.end();
 }
 
 main().catch((error) => {
