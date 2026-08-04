@@ -570,6 +570,7 @@ export type RentalHistoryCreateOrConnectWithoutPropertyInput = {
 
 export type RentalHistoryCreateManyPropertyInputEnvelope = {
   data: Prisma.RentalHistoryCreateManyPropertyInput | Prisma.RentalHistoryCreateManyPropertyInput[]
+  skipDuplicates?: boolean
 }
 
 export type RentalHistoryUpsertWithWhereUniqueWithoutPropertyInput = {
@@ -1404,6 +1405,7 @@ export type RentalHistoryCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many RentalHistories.
    */
   data: Prisma.RentalHistoryCreateManyInput | Prisma.RentalHistoryCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1422,6 +1424,7 @@ export type RentalHistoryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many RentalHistories.
    */
   data: Prisma.RentalHistoryCreateManyInput | Prisma.RentalHistoryCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

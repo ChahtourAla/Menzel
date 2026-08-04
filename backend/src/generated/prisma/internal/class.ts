@@ -17,10 +17,10 @@ import type * as Prisma from "./prismaNamespace.js"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.8.0",
-  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
-  "activeProvider": "sqlite",
-  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel User {\n  id           String  @id @default(cuid())\n  email        String  @unique\n  passwordHash String\n  fullName     String?\n  role         String\n  partyId      String? @unique\n\n  approvalStatus String  @default(\"PENDING\")\n  isActive       Boolean @default(false)\n\n  approvedById    String?\n  approvedAt      DateTime?\n  rejectedById    String?\n  rejectedAt      DateTime?\n  rejectionReason String?\n\n  properties Property[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Property {\n  id         String @id @default(cuid())\n  propertyId String @unique\n\n  ownerUserId  String\n  owner        User    @relation(fields: [ownerUserId], references: [id])\n  ownerPartyId String?\n\n  name         String\n  description  String?\n  propertyType String?\n  address      String?\n  city         String?\n  country      String?\n  surfaceArea  Float?\n  rooms        Int?\n  bedrooms     Int?\n  bathrooms    Int?\n\n  expectedRentalIncome Float?\n  expectedExpenses     Float?\n  currency             String @default(\"MAD\")\n\n  status String @default(\"DRAFT\")\n\n  images        PropertyImage[]\n  rentalHistory RentalHistory[]\n  documents     PropertyDocument[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel PropertyImage {\n  id           String   @id @default(cuid())\n  propertyDbId String\n  property     Property @relation(fields: [propertyDbId], references: [id], onDelete: Cascade)\n\n  url       String\n  caption   String?\n  isMain    Boolean @default(false)\n  sortOrder Int     @default(0)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RentalHistory {\n  id           String   @id @default(cuid())\n  propertyDbId String\n  property     Property @relation(fields: [propertyDbId], references: [id], onDelete: Cascade)\n\n  periodLabel   String\n  rentalIncome  Float\n  expenses      Float?\n  occupancyRate Float?\n  netIncome     Float?\n  currency      String @default(\"MAD\")\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel PropertyDocument {\n  id           String   @id @default(cuid())\n  propertyDbId String\n  property     Property @relation(fields: [propertyDbId], references: [id], onDelete: Cascade)\n\n  name         String\n  url          String\n  documentHash String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "clientVersion": "7.9.1",
+  "engineVersion": "e922089b7d7502aff4249d5da3420f6fa55fc6ad",
+  "activeProvider": "postgresql",
+  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id           String  @id @default(cuid())\n  email        String  @unique\n  passwordHash String\n  fullName     String?\n  role         String\n  partyId      String? @unique\n\n  approvalStatus String  @default(\"PENDING\")\n  isActive       Boolean @default(false)\n\n  approvedById    String?\n  approvedAt      DateTime?\n  rejectedById    String?\n  rejectedAt      DateTime?\n  rejectionReason String?\n\n  properties Property[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Property {\n  id         String @id @default(cuid())\n  propertyId String @unique\n\n  ownerUserId  String\n  owner        User    @relation(fields: [ownerUserId], references: [id])\n  ownerPartyId String?\n\n  name         String\n  description  String?\n  propertyType String?\n  address      String?\n  city         String?\n  country      String?\n  surfaceArea  Float?\n  rooms        Int?\n  bedrooms     Int?\n  bathrooms    Int?\n\n  expectedRentalIncome Float?\n  expectedExpenses     Float?\n  currency             String @default(\"MAD\")\n\n  status String @default(\"DRAFT\")\n\n  images        PropertyImage[]\n  rentalHistory RentalHistory[]\n  documents     PropertyDocument[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel PropertyImage {\n  id           String   @id @default(cuid())\n  propertyDbId String\n  property     Property @relation(fields: [propertyDbId], references: [id], onDelete: Cascade)\n\n  url       String\n  caption   String?\n  isMain    Boolean @default(false)\n  sortOrder Int     @default(0)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel RentalHistory {\n  id           String   @id @default(cuid())\n  propertyDbId String\n  property     Property @relation(fields: [propertyDbId], references: [id], onDelete: Cascade)\n\n  periodLabel   String\n  rentalIncome  Float\n  expenses      Float?\n  occupancyRate Float?\n  netIncome     Float?\n  currency      String @default(\"MAD\")\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel PropertyDocument {\n  id           String   @id @default(cuid())\n  propertyDbId String\n  property     Property @relation(fields: [propertyDbId], references: [id], onDelete: Cascade)\n\n  name         String\n  url          String\n  documentHash String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -45,10 +45,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.js"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.js"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.js")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.js")
     return await decodeBase64AsWasm(wasm)
   },
 
@@ -82,7 +82,7 @@ export interface PrismaClientConstructor {
     LogOpts extends LogOptions<Options> = LogOptions<Options>,
     OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U } ? U : Prisma.PrismaClientOptions['omit'],
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-  >(options: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
+  >(options: Prisma.PrismaClientConstructorArgs<Options>): PrismaClient<LogOpts, OmitOpts, ExtArgs>
 }
 
 /**
@@ -103,7 +103,7 @@ export interface PrismaClientConstructor {
 
 export interface PrismaClient<
   in LogOpts extends Prisma.LogLevel = never,
-  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
+  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = Prisma.PrismaClientOptions['omit'],
   in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }

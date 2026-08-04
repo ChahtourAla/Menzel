@@ -904,6 +904,7 @@ export type PropertyCreateOrConnectWithoutOwnerInput = {
 
 export type PropertyCreateManyOwnerInputEnvelope = {
   data: Prisma.PropertyCreateManyOwnerInput | Prisma.PropertyCreateManyOwnerInput[]
+  skipDuplicates?: boolean
 }
 
 export type PropertyUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -2263,6 +2264,7 @@ export type PropertyCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Properties.
    */
   data: Prisma.PropertyCreateManyInput | Prisma.PropertyCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2281,6 +2283,7 @@ export type PropertyCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Properties.
    */
   data: Prisma.PropertyCreateManyInput | Prisma.PropertyCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
