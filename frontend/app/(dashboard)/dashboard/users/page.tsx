@@ -386,7 +386,6 @@ export default function UsersPage() {
                     value={partyIds[actionUser.id] ?? ''}
                     onChange={(event) => setPartyIds((current) => ({ ...current, [actionUser.id]: event.target.value }))}
                     placeholder={actionUser.role === 'INVESTOR' ? 'Investor4::1220abc...' : 'Owner::1220abc...'}
-                    readOnly={actionUser.role === 'INVESTOR'}
                     aria-label="Daml Party ID"
                   />
                   <Button className="w-full gap-2" onClick={() => void handleApprove(actionUser)} disabled={approvingUser === actionUser.id}>
